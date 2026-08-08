@@ -1,0 +1,27 @@
+{% extends 'inventoryApp/layout.html' %}
+{% load static %}
+
+{% block title %}Login Form{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 text-center">
+        <h2>Login</h2>
+            {% if error_message %}
+                <p style="color: #ff0000;">{{ error_message }}</p>
+            {% endif %}
+            <form method="POST" class="mt-4" action="{% url 'authApp:login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" required>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="{% url 'authApp:register' %}">Register here</a>.</p>
+        </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'inventoryApp/layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron text-center">
+        <h class="display-4">Welcome to the Book Inventory</h1>
+        <p class="lead">Manage your book collection efficiently.</p>
+        <hr class="my-4">
+        {% if user.is_authenticated %}
+            {% if user.is_staff %}
+                <a href="{% url 'inventoryApp:add_book' %}" class="btn btn-primary">Add a New Book</a>
+            {% endif %}
+            <a href="{% url 'inventoryApp:book_list' %}" class="btn btn-secondary">View Book List</a>
+        {% else %}
+            <a href="{% url 'authApp:login' %}" class="btn btn-primary">Login</a>
+            <a href="{% url 'authApp:register' %}" class="btn btn-secondary">Register</a>
+        {% endif %}
+    </div>
+{% endblock %}
