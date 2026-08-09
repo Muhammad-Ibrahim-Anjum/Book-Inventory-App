@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('inventoryApp.urls', 'inventoryApp'), namespace='inventoryApp')),
     path('authApp/', include(('authApp.urls', 'authApp'), namespace='authApp')),
+    path("silk/", include("silk.urls", namespace="silk")),
 ]

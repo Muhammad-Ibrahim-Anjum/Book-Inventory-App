@@ -1,0 +1,15 @@
+{% extends 'inventoryApp/layout.html' %}
+
+{% block title %}Confirm Delete Book{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Confirm Delete Author</h2>
+        <p>Are you sure you want to delete the author "{{ author.name }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'inventoryApp:book_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

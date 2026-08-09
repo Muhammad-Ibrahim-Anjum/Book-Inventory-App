@@ -1,0 +1,12 @@
+{% extends 'inventoryApp/layout.html' %}
+
+{% block title %}Confirm Delete Book{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">View Book Details</h2>
+        <p><strong>Title:</strong> {{ book.title }}</p>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+    </div>
+{% endblock %}

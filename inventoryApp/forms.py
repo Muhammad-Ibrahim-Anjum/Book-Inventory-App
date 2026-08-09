@@ -1,27 +1,43 @@
 from django import forms
-from .models import Book
+from .models import Author, Books
 
 class BookForm(forms.ModelForm):
     class Meta:
-        model = Book
-        fields = '__all__'
+        model = Books
+        # Keep explicit fields that exist on the Books model
+        fields = ['title', 'description', 'published_date', 'author', 'genres', 'available_copies']
         labels = {
-            'book_id': 'Book ID',
-            'sku': 'SKU',
             'title': 'Title',
-            'author': 'Author',
             'description': 'Description',
-            'price': 'Price',
-            'quantity': 'Quantity',
             'published_date': 'Published Date',
+            'author': 'Author',
+            'genres': 'Genres',
+            'available_copies': 'Available Copies',
         }
         widgets = {
-            'book_id': forms.NumberInput(attrs={'placeholder': 'Book ID', 'class': 'form-control'}),
-            'sku': forms.TextInput(attrs={'placeholder': 'SKU', 'class': 'form-control'}),
-            'title': forms.TextInput(attrs={'placeholder': 'Title', 'class': 'form-control'}),
-            'author': forms.TextInput(attrs={'placeholder': 'Author', 'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Description', 'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'placeholder': 'Price', 'class': 'form-control'}),
-            'quantity': forms.NumberInput(attrs={'placeholder': 'Quantity', 'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Title', 'class': 'form-control', 'maxlength': 100}),
+            'description': forms.Textarea(attrs={'placeholder': 'Description', 'class': 'form-control', 'rows': 4}),
             'published_date': forms.DateInput(attrs={'placeholder': 'Published Date', 'class': 'form-control', 'type': 'date'}),
+            'author': forms.Select(attrs={'class': 'form-control'}),
+            'genres': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'available_copies': forms.NumberInput(attrs={'placeholder': 'Available Copies', 'class': 'form-control', 'min': 0}),
+        }
+
+class AuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ['name', 'bio', 'birth_year', 'nationality']
+
+        labels = {
+            'name': 'Name',
+            'bio': 'Biography',
+            'birth_year': 'Birth Year',
+            'nationality': 'Nationality',
+        }
+
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Name', 'class': 'form-control', 'maxlength': 200}),
+            'bio': forms.Textarea(attrs={'placeholder': 'Biography', 'class': 'form-control', 'rows': 4}),
+            'birth_year': forms.NumberInput(attrs={'placeholder': 'Birth Year', 'class': 'form-control', 'min': 0}),
+            'nationality': forms.TextInput(attrs={'placeholder': 'Nationality', 'class': 'form-control', 'maxlength': 100}),
         }

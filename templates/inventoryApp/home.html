@@ -4,12 +4,13 @@
 
 {% block content %}
     <div class="jumbotron text-center">
-        <h class="display-4">Welcome to the Book Inventory</h1>
+        <h1 class="display-4">Welcome to the Book Inventory</h1>
         <p class="lead">Manage your book collection efficiently.</p>
         <hr class="my-4">
         {% if user.is_authenticated %}
             {% if user.is_staff %}
                 <a href="{% url 'inventoryApp:add_book' %}" class="btn btn-primary">Add a New Book</a>
+                <a href="{% url 'inventoryApp:add_author' %}" class="btn btn-primary">Add a New Author</a>
             {% endif %}
             <a href="{% url 'inventoryApp:book_list' %}" class="btn btn-secondary">View Book List</a>
         {% else %}
