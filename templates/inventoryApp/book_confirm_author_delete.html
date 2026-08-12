@@ -1,6 +1,6 @@
 {% extends 'inventoryApp/layout.html' %}
 
-{% block title %}Confirm Delete Book{% endblock %}
+{% block title %}Confirm Delete Author{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -9,7 +9,7 @@
         <form method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Yes, Delete</button>
-            <a href="{% url 'inventoryApp:book_list' %}" class="btn btn-secondary">Cancel</a>
+            <a href="{% url 'inventoryApp:author_list' %}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from .forms import AuthorForm, BookForm
@@ -26,14 +26,14 @@ def book_list_view(request):
     if not request.user.is_authenticated:
         return redirect('authApp:login')
     
-    books = Books.objects.all()
+    books = Books.objects.select_related("author").prefetch_related("genres")
     return render(request, 'inventoryApp/book_list.html', {'books': books})
 
 def book_detail_view(request, book_id):
     if not request.user.is_authenticated:
         return redirect('authApp:login')
     
-    book = Books.objects.get(id=book_id)
+    book = Books.objects.select_related("author").prefetch_related("genres").get(id=book_id)
     return render(request, 'inventoryApp/book_detail.html', {'book': book})
 
 
@@ -43,7 +43,7 @@ def book_update_view(request, book_id):
     if not request.user.is_staff:
         return redirect('inventoryApp:home')
     
-    book = Books.objects.get(id=book_id)
+    book = Books.objects.select_related("author").prefetch_related("genres").get(id=book_id)
     form = BookForm(instance=book)
     if request.method == 'POST':
         form = BookForm(request.POST, instance=book)
@@ -59,7 +59,7 @@ def book_delete_view(request, book_id):
     if not request.user.is_staff:
         return redirect('inventoryApp:home')
     
-    book = Books.objects.get(id=book_id)
+    book = Books.objects.select_related("author").prefetch_related("genres").get(id=book_id)
     if request.method == 'POST':
         book.delete()
         return redirect('inventoryApp:book_list')
@@ -94,7 +94,7 @@ def author_update_view(request, author_id):
     if not request.user.is_staff:
         return redirect('inventoryApp:home')
 
-    author = Author.objects.get(id=author_id)
+    author = get_object_or_404(Author, id=author_id)
     form = AuthorForm(instance=author)
     if request.method == 'POST':
         form = AuthorForm(request.POST, instance=author)
@@ -110,20 +110,7 @@ def author_delete_view(request, author_id):
     if not request.user.is_staff:
         return redirect('inventoryApp:home')
 
-    author = Author.objects.get(id=author_id)
-    if request.method == 'POST':
-        author.delete()
-        return redirect('inventoryApp:author_list')
-    
-    return render(request, 'inventoryApp/book_confirm_author_delete.html', {'author': author})
-
-def author_delete_view(request, author_id):
-    if not request.user.is_authenticated:
-        return redirect('authApp:login')
-    if not request.user.is_staff:
-        return redirect('inventoryApp:home')
-
-    author = Author.objects.get(id=author_id)
+    author = Author.objects.get(id=author_id) 
     if request.method == 'POST':
         author.delete()
         return redirect('inventoryApp:author_list')

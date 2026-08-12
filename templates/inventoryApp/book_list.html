@@ -11,7 +11,6 @@
                     <th>Title</th>
                     <th>Genres</th>
                     <th>Author</th>
-                    <th>ISBN</th>
                     <th>Publication Date</th>
                     <th>Actions</th>
                 </tr>
@@ -20,15 +19,17 @@
                 {% for book in books %}
                     <tr>
                         <td>{{ book.title }}</td>
-                        <td>{{ book.genres.all|join:", " }}</td>
-                        <td>{{ book.author }}</td>
-                        <td>{{ book.isbn }}</td>
-                        <td>{{ book.publication_date }}</td>
+                        <td>
+                            {% for genre in book.genres.all %}
+                                {{ genre.name }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ book.author.name }}</td>
+                        <td>{{ book.published_date }}</td>
                         {% if user.is_staff %}
                         <td>
                             <a href="{% url 'inventoryApp:book_update' book.id %}" class="btn btn-sm btn-primary">Edit</a>
                             <a href="{% url 'inventoryApp:book_delete' book.id %}" class="btn btn-sm btn-warning">Delete Book</a>
-                            <a href="{% url 'inventoryApp:author_delete' book.author.id %}" class="btn btn-sm btn-warning">Delete Author</a>
                         </td>
                         {% else %}
                         <td>
