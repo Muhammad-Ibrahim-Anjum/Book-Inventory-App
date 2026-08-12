@@ -66,6 +66,14 @@ def book_delete_view(request, book_id):
     
     return render(request, 'inventoryApp/book_confirm_delete.html', {'book': book})
 
+def author_detail_view(request, author_id):
+    if not request.user.is_authenticated:
+        return redirect('authApp:login')
+    
+    author = get_object_or_404(Author, id=author_id)
+    books = author.books.all()  # Using the related_name defined in the ForeignKey
+    return render(request, 'inventoryApp/author_detail.html', {'author': author, 'books': books})
+
 def add_author_view(request):
     if not request.user.is_authenticated:
         return redirect('authApp:login')

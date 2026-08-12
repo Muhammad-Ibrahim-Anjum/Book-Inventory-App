@@ -1,0 +1,17 @@
+{% extends 'inventoryApp/layout.html' %}
+
+{% block title %}Author Details{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">View Author Details</h2>
+        <p><strong>Name:</strong> {{ author.name }}</p>
+        <p><strong>Bio:</strong> {{ author.bio }}</p>
+        <h3>Books by this Author:</h3>
+        <ul>
+            {% for book in books %}
+                <li>{{ book.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
