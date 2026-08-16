@@ -4,12 +4,28 @@
 
 {% block content %}
     <div class="jumbotron text-center">
-        <h class="display-4">Welcome to the Book Inventory</h1>
+        <h1 class="display-4">Welcome to the Book Inventory</h1>
         <p class="lead">Manage your book collection efficiently.</p>
+        {% if user.is_authenticated %}
+            <p>Hello, {{ request.user.username }}!</p>
+            {% if user.member %}
+                <p>{{ user.member.membership_number }}</p>
+            {% else %}
+                <p>You are Not our member</p>
+            {% endif %}
+        {% else %}
+            <p>Please log in or register to access more features.</p>
+        {% endif %}
         <hr class="my-4">
         {% if user.is_authenticated %}
             {% if user.is_staff %}
                 <a href="{% url 'inventoryApp:add_book' %}" class="btn btn-primary">Add a New Book</a>
+                <a href="{% url 'inventoryApp:add_author' %}" class="btn btn-primary">Add a New Author</a>
+            {% endif %}
+            {% if user.member %}
+                <a href="{% url 'inventoryApp:borrowed_books' %}" class="btn btn-secondary">View Borrowed Books</a>
+            {% else %}
+                <a href="{% url 'inventoryApp:become_member' %}" class="btn btn-secondary">Become a Member</a>
             {% endif %}
             <a href="{% url 'inventoryApp:book_list' %}" class="btn btn-secondary">View Book List</a>
         {% else %}

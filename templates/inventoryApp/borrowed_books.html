@@ -1,0 +1,41 @@
+{% extends 'inventoryApp/layout.html' %}
+
+{% block title %}Borrowed Books{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Borrowed Books</h2>
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Genres</th>
+                    <th>Author</th>
+                    <th>Borrowed On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in borrowed_records %}
+                    <tr>
+                        <td>{{ record.book.title }}</td>
+                        <td>
+                            {% for genre in record.book.genres.all %}
+                                {{ genre.name }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ record.book.author.name }}</td>
+                        <td>{{ record.borrowed_on }}</td>
+                        <td>
+                            <a href="{% url 'inventoryApp:book_detail' record.book.id %}" class="btn btn-sm btn-info">View Details</a>
+                            <a href="{% url 'inventoryApp:unborrow_book' record.book.id %}" class="btn btn-sm btn-success">Unborrow Book</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No books available.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

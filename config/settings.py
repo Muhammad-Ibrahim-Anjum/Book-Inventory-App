@@ -125,5 +125,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+ALLOWED_HOSTS = ALLOWED_HOSTS or ['testserver', 'localhost', '127.0.0.1']
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"

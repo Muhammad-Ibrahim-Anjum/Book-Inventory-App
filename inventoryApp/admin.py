@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from inventoryApp.models import Book
+from inventoryApp.models import Books
 
 # Register your models here.
-admin.site.register(Book)
+admin.site.register(Books)

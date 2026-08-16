@@ -1,0 +1,14 @@
+{% extends 'inventoryApp/layout.html' %}
+
+{% block title %}Become a Member{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Become a Member</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <button href="{% url 'inventoryApp:become_member' %}" type="submit" class="btn btn-primary">Become Member</button>
+    </form>
+</div>
+{% endblock %}
